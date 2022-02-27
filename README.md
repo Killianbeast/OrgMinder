@@ -7,3 +7,6 @@ To run the webserver in the current state, you must create a [Python Virtual Env
 After creating the Virtual Environment, install Flask within it. <br>
 ```$ pip install Flask```<br>
 After Flask is installed, run the `main.py` file in the main directory
+
+## Credits
+OrgMinder was created by Trent Bell and Colby Killian for HackWesTx 2022.

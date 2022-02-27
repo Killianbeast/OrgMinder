@@ -3,7 +3,7 @@
 {% block body %}
     <div class="container">
         <div class="row h-100 justify-content-center pt-3">
-            <div class="col-3 align-self-center border bg-light my-auto">
+            <div class="col-3 align-self-center border bg-light my-auto rounded-3 border shadow-lg">
                 <h1>Create Account</h1>
                 <form action="/createAccount" method="POST" oninput='up2.setCustomValidity(confirmPass.value != password.value ? "Passwords do not match." : "")'>
                     <div class="mb-3 form-check">

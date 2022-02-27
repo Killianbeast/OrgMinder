@@ -351,8 +351,6 @@ def directory():
 
 @app.errorhandler(404)
 def page_not_found(e):
-    if(not session.get("user_logged")):
-        return redirect("/login")
     return render_template('404.html',username=session.get("user_logged")), 404
 
 

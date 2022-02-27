@@ -1,0 +1,26 @@
+{% extends 'default.html' %}
+
+{% block body %}
+<div class="container">
+    <div class="row h-100 justify-content-center pt-5">
+        <div class="col-12 align-self-center border bg-light my-auto">
+            <h1>{{data['firstname']}} {{data['lastname']}}</h1>
+            <h3>({{data['username']}})</h3>
+            <hr>
+            <h2>Role:
+                {% if data['permissionlevel'] == 0 %}
+                    Member
+                {% elif data['permissionlevel'] == 1 %}
+                    Moderator
+                {% elif data['permissionlevel'] == 2 %}
+                    Administrator
+                {% else %}
+                {% endif %}
+                
+            </h2>
+            <h2>Email: {{data['email']}} </h2>
+            <h2>Phone: {{data['phone']}}</h2>
+        </div>
+    </div>
+</div>
+{% endblock %}

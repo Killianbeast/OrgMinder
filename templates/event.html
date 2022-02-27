@@ -1,0 +1,137 @@
+{% extends 'default.html' %}
+
+{% block body %}
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Excuse</h5>
+    </div>
+    <form action="/submitExcuse" method="POST">
+        <div class="modal-body">
+            <p>Please give an excuse for missing this MANDATORY event.</p>
+            
+                <div class="mb-3">
+                    <input type="text" name="eventId" hidden value="{{event['id']}}">
+                    <input type="text" name="username" hidden value="{{username}}">
+                    <label for="excuseTxt" class="form-label">Excuse Text</label>
+                    <textarea name="excuseTxt" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-danger">Send Excuse</button>
+        </div>
+    </form>
+    </div>
+</div>
+</div>
+  
+
+<div class="container pt-3">
+    <div class="row">
+        <div class="col-md-12 col bg-light border">
+            <h1>{{event['name']}}</h1>
+            <h3>Location: {{event['location']}}</h3>
+            <p>Date: {{event['date']}}</p>
+            <p>{{event['mandatory']}}</p>
+            <hr>
+            <h2>Will you be attending?</h2>
+            {%if isAttending == true %}
+                <h4 class="text-success">You have been marked as "Attending"</h4>
+            {% elif isAttending == false %}
+                <h4 class="text-info">You have been marked as "Not Attending"</h4>
+            {% elif isAttending == none %}
+                {% if excuseStatus != none %}
+                    {%if excuseStatus == 0 %}
+                        <h4 class="text-danger">Your excuse has been DENIED.</h4>
+                    {%elif excuseStatus == 1 %}
+                    <h4 class="text-success">Your excuse has been APPROVED!</h4>
+                    {%elif excuseStatus == 2 %}
+                    <h4 class="text-warning">Your excuse is pending review.</h4>
+                    {% endif %}
+                {% else %}
+                    <a role="button" class="btn btn-success" href="/attending?id={{event['id']}}">I will be attending.</a>
+                    {% if event['mandatory'] != "This is a mandatory event." %}
+                        <a role="button" class="btn btn-danger" href="/notattending?id={{event['id']}}">I will not be attending.</a>
+                    {% else %}
+                        <a role="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">I will not be attending.</a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+            {% if permissionLevel > 0 %}
+            <hr>
+            <h2>Excuses</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Username</th>
+                    <th>Excuse</th>
+                    <th>Status</th>
+                </thead>
+                <tbody>
+                    {% for excuse in excuses %}
+                    <tr>
+                        <td>{{excuse['username']}}</td>
+                        <td>{{excuse['excuseText']}}</td> 
+                        <td>
+                        {% if excuse['approved'] == 1 %}
+                            Approved!
+                        {% elif excuse['approved'] == 0 %}
+                            Denied.
+                        {% elif excuse['approved'] == 2 %}
+                            <a href="/approveExcuse?id={{excuse['id']}}" role="button" class="btn btn-success">Approve</a>
+                            <a href="/denyExcuse?id={{excuse['id']}}" role="button" class="btn btn-danger">Deny</a>
+                        {% else %}
+
+                        {% endif %}
+                        </td>
+                    <tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <h2>Not Attending</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Username</th>
+                </thead>
+                <tbody>
+                    {% for notAttending in notattendings %}
+                    <tr>
+                        <td>{{notAttending}}</td>
+                    <tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+            <h2>Attending</h2>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <th>Username</th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    
+                    {% for attending in attendings %}
+                    <tr>
+                        <td>{{attending['username']}}</td>
+                        {% if attending['checkedIn']%}
+                            <td><p class="text-success">Checked In!</p></td>
+                        {% else%}
+                            <td><a class="btn btn-primary" role="button" href="/checkin?username={{attending['username']}}&eventId={{event['id']}}">Check in</a></td>
+                        {% endif %}
+                    <tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

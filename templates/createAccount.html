@@ -1,0 +1,26 @@
+{% extends 'default.html' %}
+
+{% block body %}
+    <div class="container">
+        <div class="row h-100 justify-content-center pt-3">
+            <div class="col-3 align-self-center border bg-light my-auto">
+                <h1>Create Account</h1>
+                <form action="/createAccount" method="POST" oninput='up2.setCustomValidity(confirmPass.value != password.value ? "Passwords do not match." : "")'>
+                    <div class="mb-3 form-check">
+                        <label class="form-label" for="username">Username</label>
+                        <input class="form-control" type="text" name="username" id="username">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <label class="form-label" for="password">Password</label>
+                        <input class="form-control" type="password" name="password">
+                    </div>
+                    <div class="mb-3 form-check">
+                        <label class="form-label" for="confirmPass">Confirm Password</label>
+                        <input class="form-control" type="password" name="confirmPass">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

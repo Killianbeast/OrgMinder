@@ -1,0 +1,51 @@
+{% extends 'default.html' %}
+
+{% block body %}
+    <div class="container my-5">
+        <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg bg-light">
+        <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+            <h1 class="display-4 fw-bold lh-1">OrgMinder</h1>
+            <p class="lead">Your organization, well, organized.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+            <a role="button" href="/login" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Log In</a>
+            <a role="button" href="/createAccount" class="btn btn-outline-secondary btn-lg px-4">Create Account</a>
+            </div>
+        </div>
+        <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+            <img class="rounded-lg-3" src="/static/images/screenshot of event.png" alt="" width="575">
+        </div>
+        </div>
+    </div>
+    <div class="container rounded-3 border shadow-lg">
+        
+        <div class="row bg-light align-items-center">
+            <div class="col-md-6">
+                <h2>Schedule Events</h2>
+                <p>OrgMinder allows you to easily schedule events, and makes them easily accessable so that your organization members are always in the know. Creating events is a breeze with our simple system, which allows moderators to create events on the fly with just the click of a button!</p>
+            </div>
+            <div class="col-md-6">
+                <img src="/static/images/collegePeeps.jpeg" width="100%" alt="">
+            </div>
+        </div>
+        <div class="row bg-light align-items-center">
+            <div class="col-md-6">
+                <img src="/static/images/attendance.jpg" width="100%" alt="">
+            </div>
+            <div class="col-md-6">
+                <h2>Manage Attendace</h2>
+                <p>OrgMinder allows you to determine which events are mandatory and which aren't. Members can RSVP for events as well as send excuses for mandatory events. 
+                    Once an excuse has been submitted they can be reviewed and accepted/denied by a moderator. 
+                </p>
+            </div>
+        </div>
+        <div class="row bg-light align-items-center">
+            <div class="col-md-6">
+                <h2>Help Your Members Stay In Touch</h2>
+                <p>OrgMinder features a directory to store all of your Member's contact information so that members can always get in contact with other members when needed.</p>
+            </div>
+            <div class="col-md-6">
+                <img src="/static/images/keep in touch.jpg" width="100%" alt="">
+            </div>
+        </div>
+    </div>
+{% endblock %}

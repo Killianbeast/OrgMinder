@@ -47,7 +47,7 @@ def createAccount():
         password = request.form['password']
         
         conn = sqlite3.connect(dbName)
-        # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+        # PASSWORD IS IN PLAINTEXT FOR NOW
         conn.execute("INSERT INTO LOGINS (USERNAME, PASSWORD) VALUES (?,?);", (username, password))
         conn.commit()
         conn.close()
@@ -216,7 +216,7 @@ def submit_excuse():
 
     conn = sqlite3.connect(dbName)
     cur = conn.cursor()
-    # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+    # PASSWORD IS IN PLAINTEXT FOR NOW
     cur.execute("INSERT INTO EXCUSES (USERNAME, EVENTID, EXCUSETXT) VALUES (?,?,?);", (username, eventId, excuseTxt))
     conn.commit()
     conn.close()
@@ -233,7 +233,7 @@ def excuse_approve():
 
     conn = sqlite3.connect(dbName)
     cur = conn.cursor()
-    # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+    # PASSWORD IS IN PLAINTEXT FOR NOW
     cur.execute("SELECT USERNAME FROM EXCUSES WHERE ID = (?)", (excuseID,))
     username = cur.fetchone()[0]
     print(username)
@@ -277,7 +277,7 @@ def createEvent():
             
         conn = sqlite3.connect(dbName)
         cur = conn.cursor()
-         # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+         # PASSWORD IS IN PLAINTEXT FOR NOW
         conn.execute("INSERT INTO Events (NAME, DATE, LOCATION, MANDATORY) VALUES (?,?,?,?);", (name, date, location, mandatory))
         conn.commit()
         cur.execute("SELECT ID FROM EVENTS WHERE NAME = (?);", (name,))
@@ -294,7 +294,7 @@ def checkIn():
     eventId = request.args.get("eventId")
     conn = sqlite3.connect(dbName)
     cur = conn.cursor()
-    # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+    # PASSWORD IS IN PLAINTEXT FOR NOW
     cur.execute("SELECT CHECKEDIN FROM EVENTS WHERE ID= (?)",(eventId,))
     checkedin = cur.fetchone()[0]
     if checkedin == None:
@@ -356,7 +356,7 @@ def page_not_found(e):
 def isAttending(username,eventID):
         conn = sqlite3.connect(dbName)
         cur = conn.cursor()
-         # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+         # PASSWORD IS IN PLAINTEXT FOR NOW
         cur.execute("SELECT ATTENDEES,NOTATTENDING FROM EVENTS WHERE ID = (?)", (eventID,))
         resp = cur.fetchone()
         if resp != None:
@@ -378,7 +378,7 @@ def getAttendees(eventID):
         attendees = []
         conn = sqlite3.connect(dbName)
         cur = conn.cursor()
-         # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+         # PASSWORD IS IN PLAINTEXT FOR NOW
         cur.execute("SELECT ATTENDEES, CHECKEDIN FROM EVENTS WHERE ID = (?)", (eventID,))
         resp = cur.fetchone()
         if resp[0] != None:
@@ -399,7 +399,7 @@ def getAttendees(eventID):
 def getExcuseStatus(username, eventID):
     conn = sqlite3.connect(dbName)
     cur = conn.cursor()
-    # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+    # PASSWORD IS IN PLAINTEXT FOR NOW
     cur.execute("SELECT STATUS FROM EXCUSES WHERE EVENTID = (?) AND USERNAME = (?)", (eventID,username))
     resp = cur.fetchone()
     if resp != None:
@@ -412,7 +412,7 @@ def getExcuseStatus(username, eventID):
 def setExcuseStatus(excuseID,status):
     conn = sqlite3.connect(dbName)
     cur = conn.cursor()
-    # PASSWORD IS IN PLAINTEXT FOR NOW, NAUGHTY NAUGHTY (YOU GET NO BITCHES, TRENT)
+    # PASSWORD IS IN PLAINTEXT FOR NOW
     cur.execute("UPDATE EXCUSES SET STATUS = (?) WHERE ID = (?)", (status,excuseID))
     conn.commit()
     cur.execute("SELECT EVENTID FROM EXCUSES WHERE ID=?",(excuseID,))
@@ -425,20 +425,3 @@ if __name__ == '__main__':
     # run() method of Flask class runs the application 
     # on the local development server.
     app.run(debug=True)
-
-
-# ———————————No bitches?———————————
-# ⠀⣞⢽⢪⢣⢣⢣⢫⡺⡵⣝⡮⣗⢷⢽⢽⢽⣮⡷⡽⣜⣜⢮⢺⣜⢷⢽⢝⡽⣝
-# ⠸⡸⠜⠕⠕⠁⢁⢇⢏⢽⢺⣪⡳⡝⣎⣏⢯⢞⡿⣟⣷⣳⢯⡷⣽⢽⢯⣳⣫⠇
-# ⠀⠀⢀⢀⢄⢬⢪⡪⡎⣆⡈⠚⠜⠕⠇⠗⠝⢕⢯⢫⣞⣯⣿⣻⡽⣏⢗⣗⠏⠀
-# ⠀⠪⡪⡪⣪⢪⢺⢸⢢⢓⢆⢤⢀⠀⠀⠀⠀⠈⢊⢞⡾⣿⡯⣏⢮⠷⠁⠀⠀
-# ⠀⠀⠀⠈⠊⠆⡃⠕⢕⢇⢇⢇⢇⢇⢏⢎⢎⢆⢄⠀⢑⣽⣿⢝⠲⠉⠀⠀⠀⠀
-# ⠀⠀⠀⠀⠀⡿⠂⠠⠀⡇⢇⠕⢈⣀⠀⠁⠡⠣⡣⡫⣂⣿⠯⢪⠰⠂⠀⠀⠀⠀
-# ⠀⠀⠀⠀⡦⡙⡂⢀⢤⢣⠣⡈⣾⡃⠠⠄⠀⡄⢱⣌⣶⢏⢊⠂⠀⠀⠀⠀⠀⠀
-# ⠀⠀⠀⠀⢝⡲⣜⡮⡏⢎⢌⢂⠙⠢⠐⢀⢘⢵⣽⣿⡿⠁⠁⠀⠀⠀⠀⠀⠀⠀
-# ⠀⠀⠀⠀⠨⣺⡺⡕⡕⡱⡑⡆⡕⡅⡕⡜⡼⢽⡻⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-# ⠀⠀⠀⠀⣼⣳⣫⣾⣵⣗⡵⡱⡡⢣⢑⢕⢜⢕⡝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-# ⠀⠀⠀⣴⣿⣾⣿⣿⣿⡿⡽⡑⢌⠪⡢⡣⣣⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-# ⠀⠀⠀⡟⡾⣿⢿⢿⢵⣽⣾⣼⣘⢸⢸⣞⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-# ⠀⠀⠀⠀⠁⠇⠡⠩⡫⢿⣝⡻⡮⣒⢽⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-# —————————————————————————————

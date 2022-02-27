@@ -119,8 +119,6 @@ def event():
             excusesResp = cur.fetchall()
             cur.execute("SELECT NOTATTENDING FROM EVENTS WHERE ID = (?)", (eventId))
             notattendingsResp = cur.fetchone()
-            #cur.execute("SELECT ATTENDEES FROM EVENTS WHERE ID = (?)", (eventId))
-            #attendingsResp = cur.fetchall()
             
             for excuse in excusesResp:
                 print(excuse)

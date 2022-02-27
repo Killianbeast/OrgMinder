@@ -4,8 +4,8 @@ OrgMinder is a web application designed to schedule events, manage attendance, a
 ## Pre-Requirements
 OrgMinder runs on the Python framework Flask. 
 To run the webserver in the current state, you must create a [Python Virtual Environment](https://docs.python.org/3/library/venv.html)
-After creating the Virtual Environment, install Flask within it. <br>
-```$ pip install Flask```<br>
+After creating the Virtual Environment, install Flask within it. Flask-Session must also be installed <br>
+```$ pip install Flask Flask-Session```<br>
 After Flask is installed, run the `main.py` file in the main directory
 
 ## Credits

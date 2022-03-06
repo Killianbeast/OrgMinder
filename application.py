@@ -1,23 +1,24 @@
+from email.mime import application
 from flask import Flask, render_template, request, session, redirect
 from flask_session import Session
 import sqlite3, time
 
-app = Flask(__name__)
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_TYPE"] = "filesystem"
-app.config.update(SECRET_KEY='b^\x80\xc6P\x11zY\xda\xd9\x02~/@w\xabJ')
+application = Flask(__name__)
+application.config["SESSION_PERMANENT"] = False
+application.config["SESSION_TYPE"] = "filesystem"
+application.config.update(SECRET_KEY='b^\x80\xc6P\x11zY\xda\xd9\x02~/@w\xabJ')
 
 # VARIABLES HERE
 dbName = "logins.db"
 
-@app.route("/")
+@application.route("/")
 def hello_world():
     if(session.get("user_logged")):
         return redirect("/events")
     else:
         return render_template("index.html")
 
-@app.route("/login",methods = ['POST', 'GET'])
+@application.route("/login",methods = ['POST', 'GET'])
 def loginPage():
     session.clear()
     if(request.method == "GET"):
@@ -38,7 +39,7 @@ def loginPage():
             session["user_logged"] = username
             return redirect("/")
 
-@app.route("/createAccount", methods=["POST","GET"])
+@application.route("/createAccount", methods=["POST","GET"])
 def createAccount():
     if(request.method == "GET"):
         return render_template("createAccount.html")
@@ -54,7 +55,7 @@ def createAccount():
         
         return redirect("/events")
 
-@app.route("/logout")
+@application.route("/logout")
 def logoutAccount():
     #Handles logging the user out by changing the user logged to a null value basically
     if(not session.get("user_logged")):
@@ -62,7 +63,7 @@ def logoutAccount():
     session["user_logged"] = None
     return redirect("/")
 
-@app.route("/events")
+@application.route("/events")
 def events():
     #Shows a list of events.
     if(not session.get("user_logged")):
@@ -86,7 +87,7 @@ def events():
 
     return render_template("events.html",username=session.get("user_logged"),permissionLevel=session.get("permissionLevel"),events=eventList)
 
-@app.route("/event/")
+@application.route("/event/")
 def event():
     #displays the event page
     if(not session.get("user_logged")):
@@ -152,7 +153,7 @@ def event():
     else:
         return redirect("/events")
 
-@app.route("/attending")
+@application.route("/attending")
 def attend():
     #Adds the user to the list of attendees for a specified event
     if(not session.get("user_logged")):
@@ -180,7 +181,7 @@ def attend():
     print(attendees)
     return redirect('/event?id=' + eventId)
 
-@app.route('/notattending')
+@application.route('/notattending')
 def not_attend():
     #Adds the user to the list of attendees for a specified event
     if(not session.get("user_logged")):
@@ -208,7 +209,7 @@ def not_attend():
     print(attendees)
     return redirect('/event?id=' + eventId)
 
-@app.route('/submitExcuse', methods=['POST'])
+@application.route('/submitExcuse', methods=['POST'])
 def submit_excuse():
     eventId = request.form["eventId"]
     excuseTxt = request.form["excuseTxt"]
@@ -223,7 +224,7 @@ def submit_excuse():
 
     return redirect('/event?id=' + eventId)
 
-@app.route('/approveExcuse')
+@application.route('/approveExcuse')
 def excuse_approve():
     #Approves the excuse and moves the user to "Not attending"
     if(not session.get("user_logged")):
@@ -249,7 +250,7 @@ def excuse_approve():
 
     return redirect('/event?id=' + eventID)
 
-@app.route('/denyExcuse')
+@application.route('/denyExcuse')
 def excuse_deny():
     #denys the excuse.
     if(not session.get("user_logged")):
@@ -260,7 +261,7 @@ def excuse_deny():
     return redirect('/event?id=' + eventID)
 
 
-@app.route("/createEvent", methods=["POST","GET"])
+@application.route("/createEvent", methods=["POST","GET"])
 def createEvent():
     #Creates a new event
     if(not session.get("user_logged") or session.get("permissionLevel") == 0):
@@ -286,7 +287,7 @@ def createEvent():
         
         return redirect("/event?id="+id)
 
-@app.route("/checkin")
+@application.route("/checkin")
 def checkIn():
     if(not session.get("user_logged") or session.get("permissionLevel") == 0):
         return redirect("/login")
@@ -306,7 +307,7 @@ def checkIn():
     conn.close()
     return redirect("/event?id="+eventId)
 
-@app.route("/profile")
+@application.route("/profile")
 def profile():
     if(not session.get("user_logged")):
         return redirect("/login")
@@ -327,7 +328,7 @@ def profile():
     conn.close()
     return render_template("profile.html",username = session.get("user_logged"), data=userData)
 
-@app.route("/directory")
+@application.route("/directory")
 def directory():
     if(not session.get("user_logged")):
         return redirect("/login")
@@ -347,7 +348,7 @@ def directory():
     conn.close()
     return render_template("directory.html", username=session.get("user_logged"),data=userData)
 
-@app.errorhandler(404)
+@application.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html',username=session.get("user_logged")), 404
 
@@ -424,4 +425,4 @@ def setExcuseStatus(excuseID,status):
 if __name__ == '__main__':
     # run() method of Flask class runs the application 
     # on the local development server.
-    app.run(debug=True)
+    application.run(debug=True)
